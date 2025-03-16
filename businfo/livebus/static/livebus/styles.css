@@ -1,0 +1,54 @@
+/* styles.css */
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    /* Full height of the viewport */
+    display: flex;
+    justify-content: center;
+    /* Horizontally center the container */
+    align-items: center;
+    /* Vertically center the container */
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Box for bus info */
+.bus-info {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px auto;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Bus details */
+.bus-info p {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.bus-info p strong {
+    color: #007bff;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    .bus-info {
+        width: 90%;
+    }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Bus Information</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'livebus/styles.css' %}">
+
+    <script>
+        // Convert the departure time from Django context to a JavaScript Date object
+        const departureTime = new Date("{{ bus_data.departure_time }}").getTime();
+
+        // Update the countdown every second
+        const updateCountdown = setInterval(function () {
+            // Get the current time
+            const currentTime = new Date().getTime();
+
+            // Calculate the difference between the departure time and the current time
+            const timeLeft = departureTime - currentTime;
+
+            // Calculate minutes and seconds left
+            const minutesLeft = Math.floor(timeLeft / (1000 * 60));
+            const secondsLeft = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Update the countdown on the page
+            document.getElementById("countdown").innerHTML = minutesLeft + " min " + secondsLeft + " sec";
+
+            // When the countdown reaches 0, refresh the page
+            if (timeLeft < 0) {
+                clearInterval(updateCountdown); // Stop the countdown
+                window.location.reload(); // Reload the page to get fresh data
+            }
+        }, 1000); // Update the countdown every second
+    </script>
+</head>
+
+<body>
+    <div class="bus-info">
+        <h1>Next Bus Information</h1>
+        {% if bus_data %}
+        <p><strong>Bus Number:</strong> {{ bus_data.bus_number }}</p>
+        <p><strong>Direction:</strong> {{ bus_data.direction }}</p>
+        <p><strong>Next bus will arrive in:</strong> <span id="countdown">{{ bus_data.minutes_left }} min {{
+                bus_data.seconds_left }} sec</span></p>
+        <p><strong>Exact arrival time:</strong> {{ bus_data.formatted_departure_time }}</p>
+        {% else %}
+        <p>No buses available right now.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
